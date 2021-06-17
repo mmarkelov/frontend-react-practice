@@ -1,15 +1,22 @@
 import Header from "../header";
+import Form from "../form";
 import "./app.css";
+import {Box, makeStyles} from "@material-ui/core";
+
+const useStyles = makeStyles({
+    root: {
+        width: "70vw",
+        margin: "auto"
+    }
+});
 
 const App = () => {
+    const classes = useStyles();
     return (
-        <>
+        <Box className={classes.root}>
             <Header/>
-            <div className="main">
-                <h2 className="main__title title">Привет</h2>
-                <p className="main__date date">10 июня 2021 Четверг</p>
-            </div>
-        </>
+            <Form/>
+        </Box>
     )
 }
 

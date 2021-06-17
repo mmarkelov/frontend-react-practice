@@ -1,24 +1,3 @@
-* {
-    padding: 0;
-    margin: 0;
-}
 body {
     background: linear-gradient(to right, #c2e59c, #64b3f4);
-}
-
-.main {
-    top: 10vh;
-    font-family: 'Playfair Display', serif;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: auto;
-    position: relative;
-    width: 70vw;
-    padding: 5px;
-}
-
-.main__title {
-    font-size: 48px;
 }

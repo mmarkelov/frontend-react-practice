@@ -1,38 +1,30 @@
-import React from "react";
+import {useState} from "react";
 import {
     Tabs,
     Tab,
     AppBar,
     Button,
-    Box,
+    // Box,
     makeStyles,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogContentText,
     TextField,
-    DialogActions
+    DialogActions, Box
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
     header: {
-        padding: "5px",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: "0 10px 0 10px",
         background: "none",
-        borderBottom: "1px solid white",
-        boxShadow: "none"
-    },
-    boxHeader: {
-        width: "70vw",
-        margin: "auto"
+        boxShadow: "none",
+        marginBottom: "30px"
     },
     button: {
-        marginRight: "10px"
-    },
-    boxButtons: {
-        padding: "5px",
-        display: "flex",
-        justify: "flex-end",
-        alignContent: "center"
+        margin: "5px"
     },
     diagramTextField: {
         width: "400px",
@@ -45,14 +37,15 @@ const useStyles = makeStyles({
         padding: "20px"
     }
 });
+
 const Header = () => {
-    const [selectedTab, setSelectedTab] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
-        setSelectedTab(newValue);
+        setValue(newValue);
     }
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -61,24 +54,26 @@ const Header = () => {
     const handleClickClose = () => {
         setOpen(false);
     }
+
     const classes = useStyles();
+
     return (
-        <AppBar className={classes.header}>
-            <Box className={classes.boxHeader} display="flex" justifyContent="space-between">
-                <Tabs value={selectedTab} onChange={handleChange}>
+        <>
+            <AppBar className={classes.header} position="static">
+                <Tabs value={value} onChange={handleChange}>
                     <Tab label="Главная"/>
                     <Tab label="Задачи"/>
                     <Tab label="Статистика"/>
                 </Tabs>
-                <Box className={classes.boxButtons}>
+                <Box>
                     <Button className={classes.button} variant="contained" color="secondary">
                         Войти
                     </Button>
-                    <Button onClick={handleClickOpen} variant="contained" color="secondary">
+                    <Button className={classes.button} onClick={handleClickOpen} variant="contained" color="secondary">
                         Зарегистрироваться
                     </Button>
                 </Box>
-            </Box>
+            </AppBar>
             <Dialog open={open} aria-labelledby="form-title">
                 <DialogTitle id="form-title">Регистрация</DialogTitle>
                 <DialogContent>
@@ -92,7 +87,7 @@ const Header = () => {
                     <Button onClick={handleClickClose} variant="contained" color="secondary">Закрыть</Button>
                 </DialogActions>
             </Dialog>
-        </AppBar>
+        </>
     )
 }
 
