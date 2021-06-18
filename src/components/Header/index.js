@@ -4,9 +4,9 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import MainPage from "../mainPage/mainpage"
-import TasksPage from "../tasksPage/taskspage"
-import StatisticPage from "../statisticsPage/statisticspage"
+import MainPage from "../../pages/Main";
+import TasksPage from "../../pages/Tasks"
+import StatisticPage from "../../pages/Statistics"
 
 export default function Header() {
   return (

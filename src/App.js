@@ -1,28 +1,24 @@
-import React from "react";
+import {useState} from "react";
 import "./App.css";
-import SignIn from "./singIn/signIn";
-import ToDoList from "./toDoList/todolist";
+import SignIn from "./pages/SingIn/signIn";
+import ToDoList from "./pages/ToDoList";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { activePanel: "ToDoList" };
-    // если уже заходил, то this.setState({ activePanel: "ToDoList" });
-    this.activePanelHandler = this.activePanelHandler.bind(this);
+const TODO = "TODO"
+const SIGN_IN = "SIGN_IN"
+
+const App = () => {
+  const [activePanel, setActivePanel] = useState(TODO);
+
+  const activePanelHandler = (nextPanel) => {
+    setActivePanel(nextPanel);
   }
 
-  activePanelHandler(nextPanel) {
-    this.setState({ activePanel: nextPanel });
-  }
-
-  render() {
-    switch (this.state.activePanel) {
-      case "SignIn":
-        return <SignIn activePanelHandler={this.activePanelHandler} />;
-      case "ToDoList":
-        return <ToDoList activePanelHandler={this.activePanelHandler} />;
-      default:
-    }
+  switch (activePanel) {
+    case TODO:
+      return <ToDoList activePanelHandler={activePanelHandler} />;
+    default:
+    case SIGN_IN:
+      return <SignIn activePanelHandler={activePanelHandler} />;
   }
 }
 
