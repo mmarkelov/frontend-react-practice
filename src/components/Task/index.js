@@ -16,7 +16,7 @@ const useStyles = makeStyles( {
     }
 })
 // eslint-disable-next-line react/prop-types
-const Task = ({title, description, /*date*/ status}) => {
+const Task = ({title, description, date, status}) => {
     const classes = useStyles();
     return (
         <Card className={classes.card}>
@@ -28,9 +28,9 @@ const Task = ({title, description, /*date*/ status}) => {
                     <Typography className={classes.typography} gutterBottom component="p">
                         {description}
                     </Typography>
-                    {/*<Typography className={classes.typography} gutterBottom component="p">
+                    <Typography className={classes.typography} gutterBottom component="p">
                         {date}
-                    </Typography>*/}
+                    </Typography>
                     <Typography className={classes.typography} gutterBottom component="p">
                         {status}
                     </Typography>
