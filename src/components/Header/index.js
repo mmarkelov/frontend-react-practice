@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {BrowserRouter, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {
   Tabs,
   Tab,
@@ -44,12 +44,12 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-      <BrowserRouter>
+      <>
         <AppBar className={classes.header} position="static">
           <Tabs value={value} onChange={handleChange}>
-            <Tab component={NavLink} label="Главная" to="/"/>
-            <Tab component={NavLink} label="Задачи" to="/tasks"/>
-            <Tab component={NavLink} label="Статистика" to="/statistics" />
+            <Tab component={Link} label="Главная" to="/"/>
+            <Tab component={Link} label="Задачи" to="/tasks"/>
+            <Tab component={Link} label="Статистика" to="/statistics" />
           </Tabs>
           <Box>
             <Button className={classes.button} variant="contained" color="secondary">
@@ -61,7 +61,7 @@ const Header = () => {
           </Box>
         </AppBar>
         <SignInForm open={open} handleClickClose={handleClickClose}/>
-      </BrowserRouter>
+      </>
   )
 }
 

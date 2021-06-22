@@ -2,8 +2,6 @@ import {useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {Box} from "@material-ui/core";
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import Form from "../../components/Form";
 import List from "../../components/List";
 
@@ -25,12 +23,10 @@ const ToDoList = () => {
 
     return (
       <>
-        <Header />
           <Box className={classes.tasks}>
               <Form onSubmit={onSubmit}/>
               <List tasks={tasks}/>
           </Box>
-        <Footer />
       </>
   );
 }

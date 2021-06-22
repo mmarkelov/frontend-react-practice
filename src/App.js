@@ -1,11 +1,11 @@
-import {useState} from "react";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {Box, makeStyles} from "@material-ui/core";
-import SignIn from "./pages/SingIn/signIn";
-import ToDoList from "./pages/ToDoList";
+import Tasks from "./pages/Tasks";
+import Main from "./pages/Main";
+import Statistics from "./pages/Statistics";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./App.css";
-
-const TODO = "TODO"
-const SIGN_IN = "SIGN_IN"
 
 const useStyles = makeStyles({
   root: {
@@ -16,23 +16,24 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const [activePanel, setActivePanel] = useState(TODO);
 
-  const getContent = () => {
-    switch (activePanel) {
-      case TODO:
-        return <ToDoList activePanelHandler={activePanelHandler} />;
-      default:
-      case SIGN_IN:
-        return <SignIn activePanelHandler={activePanelHandler} />;
-    }
-  }
-
-  const activePanelHandler = (nextPanel) => {
-    setActivePanel(nextPanel);
-  }
-
-  return <Box className={classes.root}>{getContent()}</Box>
+  return <Router>
+    <Box className={classes.root}>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="/tasks">
+          <Tasks />
+        </Route>
+        <Route path="/statistics">
+          <Statistics />
+        </Route>
+      </Switch>
+      <Footer/>
+    </Box>
+    </Router>
 }
 
 export default App;
