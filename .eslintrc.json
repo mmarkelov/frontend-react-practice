@@ -19,6 +19,7 @@
         "react"
     ],
     "rules": {
+        "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off"
     }

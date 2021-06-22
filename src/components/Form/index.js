@@ -1,4 +1,4 @@
-import "@date-io/date-fns";
+import {format} from 'date-fns'
 import {
 	Button,
 	FormControlLabel,
@@ -7,9 +7,9 @@ import {
 	RadioGroup,
 	TextField
 } from "@material-ui/core";
-import DateFnsUtils from '@date-io/date-fns';
-import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
 import {Controller, useForm} from "react-hook-form";
+import PropTypes from 'prop-types'
+import {TASK_STATUSES} from "../../const";
 
 const useStyles = makeStyles({
 	form: {
@@ -27,37 +27,36 @@ const useStyles = makeStyles({
 	}
 });
 
-// eslint-disable-next-line react/prop-types
-const Form = ({tasks, setTasks}) => {
+const Form = (props) => {
 	const classes = useStyles();
 	const {control, reset, handleSubmit} = useForm();
 
 	const onSubmit = (data) => {
-		data.id = Math.random() * 1000;
-		setTasks([...tasks, data]);
+		props.onSubmit(data);
 		reset({
 			title: "",
 			description: "",
-			date: new Date(),
-			status: "Активная"
+			date: format(new Date(), 'yyyy-MM-dd'),
+			status: TASK_STATUSES[0]
 		})
 	}
 
 	return (
 		<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-			<Controller name="title" render={({field}) =>
-				<TextField
-					{...field}
-					label="Название задачи"
-					variant="outlined"
-					className={classes.item}
-				/>
-			}
-            rules={{
-				required: true,
-            }}
-            control={control}
-            defaultValue=""
+			<Controller name="title"
+						render={({field}) =>
+							<TextField
+								{...field}
+								label="Название задачи"
+								variant="outlined"
+								className={classes.item}
+							/>
+						}
+						rules={{
+							required: true,
+						}}
+						control={control}
+						defaultValue=""
 			/>
 			<Controller name="description" render={({field}) =>
 				<TextField {...field} multiline rows={5} label="Описание задачи" variant="outlined"
@@ -66,37 +65,42 @@ const Form = ({tasks, setTasks}) => {
             control={control}
             defaultValue=""
 			/>
-			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				<Controller name="date"
-					control={control}
-					/* eslint-disable-next-line no-unused-vars */
-					render={({ field: {ref, ...rest} }) => (
-						<KeyboardDatePicker
-							margin="normal"
-							label="Дата выполнения"
-							format="MM/dd/yyyy"
-							className={classes.item}
-							{...rest}
-						/>
-					)}
-					defaultValue={new Date()}
-				/>
-			</MuiPickersUtilsProvider>
+			<Controller name="date"
+						render={({field}) =>
+							<TextField
+								type="date"
+								{...field}
+								label="Дата выполнения"
+								variant="outlined"
+								className={classes.item}
+								InputLabelProps={{
+									shrink: true,
+								}}
+							/>
+						}
+						rules={{
+							required: true,
+						}}
+						control={control}
+						defaultValue={format(new Date(), 'yyyy-MM-dd')}
+			/>
 			<Controller
 				name="status"
 				control={control}
 				render={({ field }) => (
 					<RadioGroup aria-label="Статус задачи" className={classes.item} {...field}>
-						<FormControlLabel value="Активная" control={<Radio />} label="Активная"/>
-						<FormControlLabel value="Отложенная" control={<Radio />} label="Отложенная"/>
-						<FormControlLabel value="Отмененная" control={<Radio />} label="Отмененная"/>
+						{TASK_STATUSES.map(item => <FormControlLabel key={item} value={item} control={<Radio />} label={item}/>)}
 					</RadioGroup>
 				)}
-				defaultValue="Активная"
+				defaultValue={TASK_STATUSES[0]}
 			/>
 			<Button type="submit">Добавить задачу</Button>
 		</form>
 	)
+}
+
+Form.propTypes = {
+	onSubmit: PropTypes.func.isRequired
 }
 
 export default Form;

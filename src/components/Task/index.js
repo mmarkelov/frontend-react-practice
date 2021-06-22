@@ -1,4 +1,8 @@
 import {Button, Card, CardActionArea, CardActions, CardContent, makeStyles, Typography} from "@material-ui/core";
+import {parse, format} from 'date-fns';
+import {ru} from 'date-fns/locale';
+import PropTypes from 'prop-types';
+import {TASK_STATUSES} from "../../const";
 
 const useStyles = makeStyles( {
     card: {
@@ -15,9 +19,11 @@ const useStyles = makeStyles( {
         textAlign: "center"
     }
 })
-// eslint-disable-next-line react/prop-types
+
 const Task = ({title, description, date, status}) => {
     const classes = useStyles();
+    const dateObj = parse(date, 'yyyy-MM-dd', new Date())
+
     return (
         <Card className={classes.card}>
             <CardActionArea>
@@ -29,7 +35,7 @@ const Task = ({title, description, date, status}) => {
                         {description}
                     </Typography>
                     <Typography className={classes.typography} gutterBottom component="p">
-                        {date}
+                        {format(dateObj, 'PP', {locale: ru})}
                     </Typography>
                     <Typography className={classes.typography} gutterBottom component="p">
                         {status}
@@ -46,6 +52,13 @@ const Task = ({title, description, date, status}) => {
             </CardActions>
         </Card>
     )
+}
+
+Task.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    status: PropTypes.oneOf(TASK_STATUSES)
 }
 
 export default Task;
