@@ -62,7 +62,7 @@ export default function TaskManager() {
                 aria-haspopup="true"
                 onClick={handleToggle}
             >
-                Filter tasks
+                Сортировать
             </Button>
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                 {({ TransitionProps, placement }) => (
@@ -73,9 +73,9 @@ export default function TaskManager() {
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={handleClose}>Прошедшие</MenuItem>
+                                    <MenuItem onClick={handleClose}>На сегодня</MenuItem>
+                                    <MenuItem onClick={handleClose}>Предстоящие</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
