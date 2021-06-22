@@ -8,7 +8,7 @@ import {
   Button,
   makeStyles
 } from "@material-ui/core";
-import SignInForm from '../SignInForm'
+import SignInForm from '../SignInForm';
 
 const useStyles = makeStyles({
   header: {

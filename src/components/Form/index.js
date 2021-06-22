@@ -16,26 +16,30 @@ const useStyles = makeStyles({
 		display: "flex",
 		flexDirection: "column",
 		width: "300px",
+		height: "510px",
 		background: "white",
 		padding: "15px",
-		borderRadius: "5px"
+		borderRadius: "5px",
+		marginRight: "20px"
 	},
 	item: {
 		margin: "0 0 30px 0"
 	}
 });
 
-const Form = () => {
+// eslint-disable-next-line react/prop-types
+const Form = ({tasks, setTasks}) => {
 	const classes = useStyles();
 	const {control, reset, handleSubmit} = useForm();
 
 	const onSubmit = (data) => {
-		localStorage.setItem("Задачи", JSON.stringify([...data]));
+		data.id = Math.random() * 1000;
+		setTasks([...tasks, data]);
 		reset({
 			title: "",
 			description: "",
 			date: new Date(),
-			status: ""
+			status: "Активная"
 		})
 	}
 
