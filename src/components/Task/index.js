@@ -7,13 +7,13 @@ import {TASK_STATUSES} from "../../const";
 const useStyles = makeStyles( {
     card: {
         height: "200px",
-        width: "300px",
+        width: "250px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
         border: "5px solid #c2e59c",
-        margin: "20px 0px",
+        margin: "20px",
     },
     typography: {
         textAlign: "center"

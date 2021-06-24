@@ -10,13 +10,7 @@ import List from "../../components/List";
 const useStyles = makeStyles({
     taskForm: {
         marginBottom: "15px"
-    },
-    tasks: {
-        display: "grid",
-        // gridTemplateColumns: "repeat(3, 1fr)",
-        // gridTemplateRows: "repeat(3, 100px)"
     }
-
 });
 
 const ToDoList = () => {
@@ -32,6 +26,7 @@ const ToDoList = () => {
       <>
         <Header />
           <Form className={classes.taskForm} onSubmit={onSubmit}/>
+
           <Box className={classes.tasks}>
               <List tasks={tasks}/>
           </Box>

@@ -8,13 +8,10 @@ import {
 	TextField
 } from "@material-ui/core";
 import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
 import {Controller, useForm} from "react-hook-form";
 import PropTypes from 'prop-types'
 import {TASK_STATUSES} from "../../const";
+import SortMenu from "../SortMenu";
 import React from "react";
 
 const useStyles = makeStyles((theme) =>({
@@ -30,6 +27,10 @@ const useStyles = makeStyles((theme) =>({
 	},
 	item: {
 		margin: "0 0 30px 0"
+	},
+	section: {
+		display: 'flex',
+		justifyContent: 'space-evenly'
 	},
 	root: {
 		'& > *': {
@@ -65,9 +66,12 @@ const Form = (props) => {
 
 	return (
 		<div>
-			<Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-				Добавить задачу
-			</Button>
+			<div className={classes.section}>
+				<Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+					Добавить задачу
+				</Button>
+				<SortMenu/>
+			</div>
 			<Dialog open={open}>
 				<form  onClose={handleClose} className={classes.form} onSubmit={handleSubmit(onSubmit)}>
 					<Controller name="title"
