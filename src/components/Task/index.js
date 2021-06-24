@@ -13,7 +13,7 @@ const useStyles = makeStyles( {
         justifyContent: "space-between",
         alignItems: "center",
         border: "5px solid #c2e59c",
-        marginBottom: "10px"
+        margin: "20px 0px",
     },
     typography: {
         textAlign: "center"

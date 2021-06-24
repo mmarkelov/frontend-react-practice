@@ -7,11 +7,17 @@ import {
 	RadioGroup,
 	TextField
 } from "@material-ui/core";
+import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 import {Controller, useForm} from "react-hook-form";
 import PropTypes from 'prop-types'
 import {TASK_STATUSES} from "../../const";
+import React from "react";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
 	form: {
 		display: "flex",
 		flexDirection: "column",
@@ -24,12 +30,28 @@ const useStyles = makeStyles({
 	},
 	item: {
 		margin: "0 0 30px 0"
+	},
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+		},
 	}
-});
+}));
+
 
 const Form = (props) => {
 	const classes = useStyles();
 	const {control, reset, handleSubmit} = useForm();
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	const onSubmit = (data) => {
 		props.onSubmit(data);
@@ -42,60 +64,66 @@ const Form = (props) => {
 	}
 
 	return (
-		<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-			<Controller name="title"
-						render={({field}) =>
-							<TextField
-								{...field}
-								label="Название задачи"
-								variant="outlined"
-								className={classes.item}
-							/>
-						}
-						rules={{
-							required: true,
-						}}
-						control={control}
-						defaultValue=""
-			/>
-			<Controller name="description" render={({field}) =>
-				<TextField {...field} multiline rows={5} label="Описание задачи" variant="outlined"
-					className={classes.item} />
-			}
-            control={control}
-            defaultValue=""
-			/>
-			<Controller name="date"
-						render={({field}) =>
-							<TextField
-								type="date"
-								{...field}
-								label="Дата выполнения"
-								variant="outlined"
-								className={classes.item}
-								InputLabelProps={{
-									shrink: true,
+		<div>
+			<Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+				Добавить задачу
+			</Button>
+			<Dialog open={open}>
+				<form  onClose={handleClose} className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+					<Controller name="title"
+								render={({field}) =>
+									<TextField
+										{...field}
+										label="Название задачи"
+										variant="outlined"
+										className={classes.item}
+									/>
+								}
+								rules={{
+									required: true,
 								}}
-							/>
-						}
-						rules={{
-							required: true,
-						}}
+								control={control}
+								defaultValue=""
+					/>
+					<Controller name="description" render={({field}) =>
+						<TextField {...field} multiline rows={5} label="Описание задачи" variant="outlined" className={classes.item} />
+					}
+								control={control}
+								defaultValue=""
+					/>
+					<Controller name="date"
+								render={({field}) =>
+									<TextField
+										type="date"
+										{...field}
+										label="Дата выполнения"
+										variant="outlined"
+										className={classes.item}
+										InputLabelProps={{
+											shrink: true,
+										}}
+									/>
+								}
+								rules={{
+									required: true,
+								}}
+								control={control}
+								defaultValue={format(new Date(), 'yyyy-MM-dd')}
+					/>
+					<Controller
+						name="status"
 						control={control}
-						defaultValue={format(new Date(), 'yyyy-MM-dd')}
-			/>
-			<Controller
-				name="status"
-				control={control}
-				render={({ field }) => (
-					<RadioGroup aria-label="Статус задачи" className={classes.item} {...field}>
-						{TASK_STATUSES.map(item => <FormControlLabel key={item} value={item} control={<Radio />} label={item}/>)}
-					</RadioGroup>
-				)}
-				defaultValue={TASK_STATUSES[0]}
-			/>
-			<Button type="submit">Добавить задачу</Button>
-		</form>
+						render={({ field }) => (
+							<RadioGroup aria-label="Статус задачи" className={classes.item} {...field}>
+								{TASK_STATUSES.map(item => <FormControlLabel key={item} value={item} control={<Radio />} label={item}/>)}
+							</RadioGroup>
+						)}
+						defaultValue={TASK_STATUSES[0]}
+					/>
+					<Button type="submit" onClick={handleClose}>Добавить задачу</Button>
+				</form>
+			</Dialog>
+		</div>
 	)
 }
 

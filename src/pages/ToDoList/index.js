@@ -8,8 +8,13 @@ import Form from "../../components/Form";
 import List from "../../components/List";
 
 const useStyles = makeStyles({
+    taskForm: {
+        marginBottom: "15px"
+    },
     tasks: {
-        display: "flex"
+        display: "grid",
+        // gridTemplateColumns: "repeat(3, 1fr)",
+        // gridTemplateRows: "repeat(3, 100px)"
     }
 
 });
@@ -26,8 +31,8 @@ const ToDoList = () => {
     return (
       <>
         <Header />
+          <Form className={classes.taskForm} onSubmit={onSubmit}/>
           <Box className={classes.tasks}>
-              <Form onSubmit={onSubmit}/>
               <List tasks={tasks}/>
           </Box>
         <Footer />
