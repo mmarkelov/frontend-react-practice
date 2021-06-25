@@ -1,4 +1,3 @@
-import {useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles( {
@@ -14,35 +13,7 @@ const Greeting = (props) => {
     const greetingNewUser = <h2 className={classes.title}>Зарегистрируйтесь, чтобы создавать новые задачи
         и отслеживать свои достижения</h2>
 
-    useEffect(() => {
-        if (props.name) {
-            return (
-                <>
-                    {greetingUser}
-                </>
-            )
-        } else {
-            return (
-                <>
-                    {greetingNewUser}
-                </>
-            )
-        }
-    }, [props.name]);
-
-    if (props.name) {
-        return (
-            <>
-                {greetingUser}
-            </>
-        )
-    } else {
-        return (
-            <>
-                {greetingNewUser}
-            </>
-        )
-    }
+    return props.name ? greetingUser : greetingNewUser
 }
 
 export default Greeting;

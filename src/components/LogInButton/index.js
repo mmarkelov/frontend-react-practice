@@ -13,19 +13,12 @@ const LogInButton = (props) => {
         props.setOpen(true);
     }
 
-    if (props.name) {
-        return (
-            <Button className={classes.button} variant="contained" color="secondary">
-                {props.name}
-            </Button>
-        )
-    } else {
-        return (
-            <Button onClick={handleClickOpen} className={classes.button} variant="contained" color="secondary">
-                Зарегистрироваться
-            </Button>
-        )
-    }
+    const title = <h3>{props.name}</h3>
+    const button = <Button onClick={handleClickOpen} className={classes.button} variant="contained" color="secondary">
+        Зарегистрироваться
+        </Button>
+
+    return props.name ? title : button;
 }
 
 export default LogInButton;

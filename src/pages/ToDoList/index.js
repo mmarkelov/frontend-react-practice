@@ -19,13 +19,8 @@ const ToDoList = () => {
     const [tasks, setTasks] = useState([]);
 
 
-    const [user, setUser] = useState(() => {
-        if (localStorage.getItem("User") === null) {
-            return {};
-        } else {
-            return JSON.parse(localStorage.getItem("User"));
-        }
-    });
+    const [user, setUser] =
+        useState(localStorage.getItem("User") ? JSON.parse(localStorage.getItem("User")) : {});
 
     const onSubmitUser = (data) => {
         setUser(data);
