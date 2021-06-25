@@ -8,6 +8,7 @@ import {
 	TextField
 } from "@material-ui/core";
 import PropTypes from 'prop-types';
+import {Controller, useForm} from "react-hook-form";
 
 const useStyles = makeStyles({
 	diagramTextField: {
@@ -22,27 +23,69 @@ const useStyles = makeStyles({
 	}
 });
 
-const SignInForm = ({handleClickClose, open}) => {
+const SignInForm = (props) => {
 	const classes = useStyles();
+	const {control, reset, handleSubmit} = useForm();
 
-	return <Dialog open={open} aria-labelledby="form-title">
+	const onSubmit = (data) => {
+		props.onSubmitUser(data);
+		localStorage.setItem("User", JSON.stringify(data));
+		reset({
+			login: "",
+			name: ""
+		})
+	}
+
+	return <Dialog open={props.open} aria-labelledby="form-title">
 		<DialogTitle id="form-title">Регистрация</DialogTitle>
 		<DialogContent>
 			<DialogContentText>Введите логин</DialogContentText>
-			<TextField className={classes.diagramTextField} label="Ваш логин..." variant="outlined" />
+			<Controller name="login"
+						render={({field}) =>
+							<TextField
+								{...field}
+								className={classes.diagramTextField}
+								label="Ваш логин..."
+								variant="outlined"
+							/>
+						}
+						rules={{
+							required: true,
+						}}
+						control={control}
+						defaultValue=""
+			/>
 			<DialogContentText className={classes.diagramContentText}>Введите имя</DialogContentText>
-			<TextField className={classes.diagramTextField} label="Ваше имя..." variant="outlined" />
+			<Controller name="name"
+						render={({field}) =>
+							<TextField
+								{...field}
+								className={classes.diagramTextField}
+								label="Ваше имя..."
+								variant="outlined"
+							/>
+						}
+						control={control}
+						defaultValue=""
+			/>
 		</DialogContent>
 		<DialogActions className={classes.diagramActions}>
-			<Button onClick={handleClickClose} variant="contained" color="secondary">Зарегистрироваться</Button>
-			<Button onClick={handleClickClose} variant="contained" color="secondary">Закрыть</Button>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Button
+					type="submit"
+					onClick={props.handleClickClose}
+					variant="contained"
+					color="secondary">Зарегистрироваться</Button>
+			</form>
+			<Button onClick={props.handleClickClose} variant="contained" color="secondary">Закрыть</Button>
 		</DialogActions>
 	</Dialog>
 }
 
 SignInForm.propTypes = {
 	handleClickClose: PropTypes.func.isRequired,
-	open: PropTypes.bool
+	open: PropTypes.bool,
+	onSubmitUser: PropTypes.func.isRequired
 }
 
 export default SignInForm
