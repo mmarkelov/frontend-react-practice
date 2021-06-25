@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {Box, makeStyles} from "@material-ui/core";
 import Tasks from "./pages/Tasks";
@@ -16,13 +17,19 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
+  const localStorageUser = localStorage.getItem("User");
+  const [user, setUser] = useState(localStorageUser ? JSON.parse(localStorageUser) : {});
+
+  const onSubmitUser = (data) => {
+    setUser(data);
+  }
 
   return <Router>
     <Box className={classes.root}>
-      <Header />
+      <Header onSubmitUser={onSubmitUser} name={user.name}/>
       <Switch>
         <Route exact path="/">
-          <Main />
+          <Main name={user.name} />
         </Route>
         <Route path="/tasks">
           <Tasks />
