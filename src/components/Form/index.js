@@ -1,13 +1,13 @@
-import {format} from 'date-fns'
+import { format } from "date-fns";
 import {
-	Button,
-	FormControlLabel,
-	makeStyles,
-	Radio,
-	RadioGroup,
-	TextField
+  Button,
+  FormControlLabel,
+  makeStyles,
+  Radio,
+  RadioGroup,
+  TextField,
+  Dialog,
 } from "@material-ui/core";
-import Dialog from '@material-ui/core/Dialog';
 import {Controller, useForm} from "react-hook-form";
 import PropTypes from 'prop-types'
 import {TASK_STATUSES} from "../../const";
@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) =>({
 	}
 }));
 
-
 const Form = (props) => {
-	const classes = useStyles();
-	const {control, reset, handleSubmit} = useForm();
+  const classes = useStyles();
+  const { control, reset, handleSubmit } = useForm();
 
+// <<<<<<< HEAD
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -132,7 +132,7 @@ const Form = (props) => {
 }
 
 Form.propTypes = {
-	onSubmit: PropTypes.func.isRequired
-}
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default Form;

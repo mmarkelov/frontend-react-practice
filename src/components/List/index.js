@@ -1,6 +1,6 @@
-import Task from "../../components/Task";
 import PropTypes from "prop-types";
 import {TASK_STATUSES} from "../../const";
+import Task from "../../components/Task";
 import {makeStyles} from "@material-ui/styles";
 
 const useStyles = makeStyles({
@@ -36,12 +36,14 @@ const List = ({tasks}) => {
 }
 
 List.propTypes = {
-    tasks: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        status: PropTypes.oneOf(TASK_STATUSES)
-    }))
-}
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      status: PropTypes.oneOf(TASK_STATUSES),
+    })
+  ),
+};
 
 export default List;

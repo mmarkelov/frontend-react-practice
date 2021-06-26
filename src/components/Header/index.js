@@ -1,14 +1,9 @@
-import {useState} from "react";
-import {BrowserRouter, NavLink} from 'react-router-dom';
-import {
-  Tabs,
-  Tab,
-  AppBar,
-  Box,
-  Button,
-  makeStyles
-} from "@material-ui/core";
-import SignInForm from '../SignInForm';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Tabs, Tab, AppBar, makeStyles } from "@material-ui/core";
+import SignInForm from "../SignInForm";
+import LogInButton from "../LogInButton";
 
 const useStyles = makeStyles({
   header: {
@@ -17,52 +12,50 @@ const useStyles = makeStyles({
     padding: "0 10px 0 10px",
     background: "none",
     boxShadow: "none",
-    marginBottom: "30px"
+    marginBottom: "30px",
   },
   button: {
-    margin: "5px"
-  }
+    margin: "5px",
+  },
 });
 
-const Header = () => {
+const Header = ({ onSubmitUser, name }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  }
+  };
 
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  }
-
   const handleClickClose = () => {
     setOpen(false);
-  }
+  };
 
   const classes = useStyles();
 
   return (
-      <BrowserRouter>
-        <AppBar className={classes.header} position="static">
-          <Tabs value={value} onChange={handleChange}>
-            <Tab component={NavLink} label="Главная" to="/"/>
-            <Tab component={NavLink} label="Задачи" to="/tasks"/>
-            <Tab component={NavLink} label="Статистика" to="/statistics" />
-          </Tabs>
-          <Box>
-            <Button className={classes.button} variant="contained" color="secondary">
-              Войти
-            </Button>
-            <Button className={classes.button} onClick={handleClickOpen} variant="contained" color="secondary">
-              Зарегистрироваться
-            </Button>
-          </Box>
-        </AppBar>
-        <SignInForm open={open} handleClickClose={handleClickClose}/>
-      </BrowserRouter>
-  )
-}
+    <>
+      <AppBar className={classes.header} position="static">
+        <Tabs value={value} onChange={handleChange}>
+          <Tab component={Link} label="Главная" to="/" />
+          <Tab component={Link} label="Задачи" to="/tasks" />
+          <Tab component={Link} label="Статистика" to="/statistics" />
+        </Tabs>
+        <LogInButton setOpen={setOpen} name={name} />
+      </AppBar>
+      <SignInForm
+        open={open}
+        handleClickClose={handleClickClose}
+        onSubmitUser={onSubmitUser}
+      />
+    </>
+  );
+};
+
+Header.propTypes = {
+  onSubmitUser: PropTypes.func.isRequired,
+  name: PropTypes.string,
+};
 
 export default Header;
