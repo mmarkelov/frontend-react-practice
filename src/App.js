@@ -38,8 +38,8 @@ const App = () => {
           <Statistics />
         </Route>
       </Switch>
-      <Footer/>
     </Box>
+    <Footer/>
     </Router>
 }
 

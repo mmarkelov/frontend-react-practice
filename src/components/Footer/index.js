@@ -15,9 +15,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexDirection: "row",
     padding: theme.spacing(3, 2),
-    marginTop: "auto",
     color: "white"
   }
 }));
