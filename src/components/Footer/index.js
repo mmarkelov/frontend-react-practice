@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     padding: theme.spacing(3, 2),
-    color: "white"
-  }
+    color: "white",
+  },
 }));
 
 const Footer = () => {
@@ -32,6 +32,6 @@ const Footer = () => {
       </footer>
     </div>
   );
-}
+};
 
-export default Footer
+export default Footer;
