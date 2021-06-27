@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Task = ({ id, title, description, date, status, deleteTask }) => {
+const Task = ({ id, title, description, date, status, completeTask, deleteTask }) => {
   const classes = useStyles();
   const dateObj = parse(date, "yyyy-MM-dd", new Date());
 
@@ -55,7 +55,12 @@ const Task = ({ id, title, description, date, status, deleteTask }) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" variant="contained">
+        <Button
+          size="small"
+          color="primary"
+          variant="contained"
+          onClick={() => completeTask(id)}
+        >
           Выполнено
         </Button>
         <Button
@@ -77,6 +82,7 @@ Task.propTypes = {
   description: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   status: PropTypes.oneOf(TASK_STATUSES),
+  completeTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
 };
 

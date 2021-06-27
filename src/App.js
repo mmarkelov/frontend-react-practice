@@ -7,6 +7,8 @@ import Statistics from "./pages/Statistics";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.css";
+import {TASK_STATUSES} from "./const";
+// import {parse} from "date-fns";
 
 const useStyles = makeStyles({
   root: {
@@ -42,6 +44,16 @@ const App = () => {
     localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
   };
 
+  const completeTask = (id) => {
+    const doneTask = tasks.filter((task) => task.id === id).map((task) => task.status = TASK_STATUSES[1])
+    // doneTask.date = parse(doneTask.date, "yyyy-MM-dd", new Date());
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    updatedTasks.push(doneTask);
+    setTasks(updatedTasks);
+    localStorage.setItem(TASKS, JSON.stringify(doneTask))
+  }
+
+
   const deleteTask = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
@@ -58,11 +70,16 @@ const App = () => {
               name={user.name}
               tasks={tasks}
               onSubmitTasks={onSubmitTasks}
+              completeTask={completeTask}
               deleteTask={deleteTask}
             />
           </Route>
           <Route path="/tasks">
-            <Tasks tasks={tasks} />
+            <Tasks
+                tasks={tasks}
+                completeTask={completeTask}
+                deleteTask={deleteTask}
+            />
           </Route>
           <Route path="/statistics">
             <Statistics />
