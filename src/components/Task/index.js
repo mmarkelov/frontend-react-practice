@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Task = ({ title, description, date, status }) => {
+const Task = ({ id, title, description, date, status, deleteTask }) => {
   const classes = useStyles();
   const dateObj = parse(date, "yyyy-MM-dd", new Date());
 
@@ -58,7 +58,12 @@ const Task = ({ title, description, date, status }) => {
         <Button size="small" color="primary" variant="contained">
           Выполнено
         </Button>
-        <Button size="small" color="primary" variant="contained">
+        <Button
+          size="small"
+          color="primary"
+          variant="contained"
+          onClick={() => deleteTask(id)}
+        >
           Удалить
         </Button>
       </CardActions>
@@ -67,10 +72,12 @@ const Task = ({ title, description, date, status }) => {
 };
 
 Task.propTypes = {
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   status: PropTypes.oneOf(TASK_STATUSES),
+  deleteTask: PropTypes.func.isRequired,
 };
 
 export default Task;

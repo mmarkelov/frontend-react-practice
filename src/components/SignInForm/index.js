@@ -30,7 +30,6 @@ const SignInForm = (props) => {
 
   const onSubmit = (data) => {
     props.onSubmitUser(data);
-    localStorage.setItem("User", JSON.stringify(data));
     reset({
       login: "",
       name: "",

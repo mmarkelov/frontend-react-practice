@@ -16,15 +16,36 @@ const useStyles = makeStyles({
   },
 });
 
+const USER = "User";
+const TASKS = "Tasks";
+
 const App = () => {
   const classes = useStyles();
-  const localStorageUser = localStorage.getItem("User");
+  const localStorageUser = localStorage.getItem(USER);
+  const localStorageTasks = localStorage.getItem(TASKS);
   const [user, setUser] = useState(
     localStorageUser ? JSON.parse(localStorageUser) : {}
+  );
+  const [tasks, setTasks] = useState(
+    localStorageTasks ? JSON.parse(localStorageTasks) : []
   );
 
   const onSubmitUser = (data) => {
     setUser(data);
+    localStorage.setItem(USER, JSON.stringify(data));
+  };
+
+  const onSubmitTasks = (data) => {
+    const newData = { ...data, id: tasks.length + 1 };
+    const updatedTasks = [...tasks, newData];
+    setTasks(updatedTasks);
+    localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
+  };
+
+  const deleteTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
   };
 
   return (
@@ -33,10 +54,15 @@ const App = () => {
         <Header onSubmitUser={onSubmitUser} name={user.name} />
         <Switch>
           <Route exact path="/">
-            <Main name={user.name} />
+            <Main
+              name={user.name}
+              tasks={tasks}
+              onSubmitTasks={onSubmitTasks}
+              deleteTask={deleteTask}
+            />
           </Route>
           <Route path="/tasks">
-            <Tasks />
+            <Tasks tasks={tasks} />
           </Route>
           <Route path="/statistics">
             <Statistics />

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -7,8 +8,7 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
-
-const TIME_FILTERS = ["Прошедшие", "На сегодня", "Предстоящие"];
+import { TIME_FILTERS } from "../../const";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TaskManager() {
+export default function TaskManager({ filterTask }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -32,7 +32,8 @@ export default function TaskManager() {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = () => {
+  const handleClose = (item) => {
+    filterTask(item);
     setOpen(false);
   };
 
@@ -71,7 +72,7 @@ export default function TaskManager() {
                   onKeyDown={handleListKeyDown}
                 >
                   {TIME_FILTERS.map((item) => (
-                    <MenuItem key={item} onClick={handleClose}>
+                    <MenuItem key={item} onClick={() => handleClose(item)}>
                       {item}
                     </MenuItem>
                   ))}
@@ -84,3 +85,7 @@ export default function TaskManager() {
     </div>
   );
 }
+
+TaskManager.propTypes = {
+  filterTask: PropTypes.func.isRequired,
+};

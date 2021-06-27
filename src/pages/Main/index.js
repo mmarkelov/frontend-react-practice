@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
 import PropTypes from "prop-types";
@@ -6,6 +5,7 @@ import PropTypes from "prop-types";
 import Form from "../../components/Form";
 import List from "../../components/List";
 import Greeting from "../../components/Greeting";
+import { TASK_STATUSES } from "../../const";
 
 const useStyles = makeStyles({
   tasks: {
@@ -14,30 +14,32 @@ const useStyles = makeStyles({
   },
 });
 
-const Main = ({ name }) => {
+const Main = ({ name, tasks, onSubmitTasks, deleteTask }) => {
   const classes = useStyles();
-  const [tasks, setTasks] = useState([]);
-
-  const onSubmit = (data) => {
-    const newData = { ...data, id: tasks.length + 1 };
-    setTasks([...tasks, newData]);
-  };
 
   return (
-    <>
-      <Box className={classes.tasks}>
-        <Form onSubmit={onSubmit} />
-        <Box>
-          <Greeting name={name} />
-        </Box>
-        <List tasks={tasks} />
+    <Box className={classes.tasks}>
+      <Form onSubmit={onSubmitTasks} />
+      <Box>
+        <Greeting name={name} />
       </Box>
-    </>
+      <List tasks={tasks} deleteTask={deleteTask} />
+    </Box>
   );
 };
 
 Main.propTypes = {
   name: PropTypes.string,
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      status: PropTypes.oneOf(TASK_STATUSES),
+    })
+  ),
+  onSubmitTasks: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
 export default Main;
