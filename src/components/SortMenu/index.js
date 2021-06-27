@@ -4,6 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default function SortMenu() {
+    let now = new Date();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -13,6 +14,12 @@ export default function SortMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const previous = () => {
+        let allTasks = JSON.parse(localStorage["Tasks"])
+        const updatedTasks = allTasks.filter((task) => task.date !== now)
+        localStorage.setItem("Previous", updatedTasks)
+    }
 
     return (
         <div>
@@ -26,7 +33,7 @@ export default function SortMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Прошедшие</MenuItem>
+                <MenuItem onClick={handleClose} onSubmit={previous}>Прошедшие</MenuItem>
                 <MenuItem onClick={handleClose}>На сегодня</MenuItem>
                 <MenuItem onClick={handleClose}>Предстоящие</MenuItem>
             </Menu>

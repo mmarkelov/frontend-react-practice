@@ -28,9 +28,40 @@ const useStyles = makeStyles( {
     }
 })
 
+/*  const findTask = (k) => {
+    let myArray = localStorage.getItem("Tasks");
+    myArray.find(x => x.id === k);
+
+  }*/
+
 const Task = ({ title, description, date, status }) => {
   const classes = useStyles();
   const dateObj = parse(date, "yyyy-MM-dd", new Date());
+
+    const deleteTask = (id) => {
+        let allTasks = JSON.parse(localStorage["Tasks"])
+        const updatedTasks = allTasks.filter((task) => task.id !== id)
+        localStorage.setItem("Tasks", updatedTasks)
+    }
+    let completed = []
+    const completeTask = (id) => {
+        let allTasks = JSON.parse(localStorage["Tasks"])
+        const updatedTask = allTasks.filter((task) => task.id === id)
+        updatedTask.status = TASK_STATUSES[1]
+        completed.push(updatedTask)
+        localStorage.setItem("CompletedTasks", JSON.stringify(completed))
+    }
+
+    /*const onSubmit = (data) => {
+
+        props.onSubmit(data);
+        reset({
+            title: "",
+            description: "",
+            date: format(new Date(), 'yyyy-MM-dd'),
+            status: TASK_STATUSES[0]
+        })
+    }*/
 
   return (
     <Card className={classes.card}>
@@ -55,10 +86,20 @@ const Task = ({ title, description, date, status }) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" variant="contained">
+        <Button
+            size="small"
+            color="primary"
+            variant="contained"
+            onSubmit={deleteTask(2)}
+        >
           Выполнено
         </Button>
-        <Button size="small" color="primary" variant="contained">
+        <Button
+            size="small"
+            color="primary"
+            variant="contained"
+            onSubmit={completeTask(3)}
+        >
           Удалить
         </Button>
       </CardActions>

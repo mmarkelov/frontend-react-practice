@@ -1,3 +1,3 @@
-const TASK_STATUSES = ["Активная", "Отложенная", "Отмененная"];
+const TASK_STATUSES = ["Активная", "Выполненная", "Отмененная"];
 
 export { TASK_STATUSES };

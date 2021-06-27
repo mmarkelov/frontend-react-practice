@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 const List = ({tasks}) => {
     const classes = useStyles();
-
     return (
         <div className={classes.section}>
             {tasks.map(task => (

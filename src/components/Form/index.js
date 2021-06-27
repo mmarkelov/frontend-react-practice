@@ -43,7 +43,6 @@ const Form = (props) => {
   const classes = useStyles();
   const { control, reset, handleSubmit } = useForm();
 
-// <<<<<<< HEAD
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
