@@ -4,11 +4,11 @@ import Container from "@material-ui/core/Container";
 
 function Copyright() {
   return (
-    <Typography variant="body2">
-      {"blabla © blablabla "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+      <Typography variant="body2">
+        {"blabla © blablabla "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
   );
 }
 
@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
 const Footer = () => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <footer>
-        <Container maxWidth="sm">
-          <Typography variant="body1">ToDoList</Typography>
-          <Copyright />
-        </Container>
-      </footer>
-    </div>
+      <div className={classes.root}>
+        <footer>
+          <Container maxWidth="sm">
+            <Typography variant="body1">ToDoList</Typography>
+            <Copyright />
+          </Container>
+        </footer>
+      </div>
   );
 };
 

@@ -49,7 +49,7 @@ const renderActiveShape = (props) => {
     const sy = cy + (outerRadius + 10) * sin;
     const mx = cx + (outerRadius + 30) * cos;
     const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ex = mx + Math.sign(cos) * 22;
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
 
@@ -79,7 +79,7 @@ const renderActiveShape = (props) => {
             />
             <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
             <text
-                x={ex + (cos >= 0 ? 1 : -1) * 12}
+                x={ex + Math.sign(cos) * 12}
                 y={ey}
                 textAnchor={textAnchor}
                 fill="white"
@@ -97,14 +97,15 @@ export default function StatisticsManager ({ statusesData }) {
         [setActiveIndex]
     );
     const height = 400;
+    const width = 600;
     return (
-        <PieChart width={600} height={height}>
+        <PieChart width={width} height={height}>
             <Pie
                 activeIndex={activeIndex}
                 activeShape={renderActiveShape}
                 data={statusesData}
-                cx={300}
-                cy={200}
+                cx={width/2}
+                cy={height/2}
                 labelLine={false}
                 label={renderCustomizedLabel}
                 outerRadius={120}
