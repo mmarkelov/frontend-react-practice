@@ -65,7 +65,7 @@ const App = () => {
             <Tasks tasks={tasks} />
           </Route>
           <Route path="/statistics">
-            <Statistics />
+            <Statistics tasks={tasks} />
           </Route>
         </Switch>
       </Box>
