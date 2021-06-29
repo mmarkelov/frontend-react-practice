@@ -23,13 +23,13 @@ const useStyles = makeStyles({
   },
 });
 
-const List = ({ tasks, deleteTask = () => {} }) => {
+const List = ({ tasks, completeTask = () => {}, deleteTask = () => {} }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.section}>
       {tasks.map((task) => (
-        <Task key={task.id} {...task} deleteTask={deleteTask} />
+        <Task key={task.id} {...task} completeTask={completeTask} deleteTask={deleteTask} />
       ))}
     </div>
   );
@@ -44,6 +44,7 @@ List.propTypes = {
       status: PropTypes.oneOf(TASK_STATUSES),
     })
   ),
+  completeTask: PropTypes.func,
   deleteTask: PropTypes.func,
 };
 
