@@ -4,7 +4,6 @@ import { Box } from "@material-ui/core";
 
 import TaskManager from "../../components/TaskManager";
 import List from "../../components/List";
-import PropTypes from "prop-types";
 import { TASK_STATUSES, TIME_FILTERS } from "../../const";
 import { parse, isPast, isToday, isFuture } from "date-fns";
 
@@ -15,10 +14,37 @@ const useStyles = makeStyles({
   },
 });
 
-const Tasks = ({ tasks, completeTask, deleteTask }) => {
+const TASKS = "Tasks";
+
+const Tasks = () => {
     const classes = useStyles();
-    const allTasks = tasks;
+    const localStorageTasks = localStorage.getItem(TASKS);
+    const [tasks, setTasks] = useState(
+
+        localStorageTasks ? JSON.parse(localStorageTasks) : []
+    );
     const [filteredTasks, setFilteredTasks] = useState(tasks);
+    const [returnedTasks, setReturnedTasks] = useState(tasks);
+    const allTasks = tasks;
+
+    const completeTask = (id) => {
+        const taskIndex = tasks.findIndex((task) => task.id === id);
+        const updatedTasks = [...tasks];
+        updatedTasks[taskIndex] = {
+            ...updatedTasks[taskIndex],
+            status: TASK_STATUSES[1],
+        };
+        setTasks(updatedTasks);
+        localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
+        setReturnedTasks(updatedTasks);
+    }
+
+    const deleteTask = (id) => {
+        const updatedTasks = tasks.filter((task) => task.id !== id);
+        setTasks(updatedTasks);
+        localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
+        setReturnedTasks(updatedTasks);
+    };
 
     const filterTask = (time) => {
         if (time === TIME_FILTERS[0]) {
@@ -41,25 +67,25 @@ const Tasks = ({ tasks, completeTask, deleteTask }) => {
         }
     };
 
+
+    Array.prototype.unique = function() {
+        let a = this.concat();
+        for(let i = 0; i < a.length; ++i) {
+            for(let j = i+1; j < a.length; ++j) {
+                if(a[i].id === a[j].id)
+                    a.splice(j--, 1);
+            }
+        }
+        return a;
+    };
+
+    const arr = [...returnedTasks, ...filteredTasks].unique();
     return (
     <Box className={classes.tasks}>
         <TaskManager filterTask={filterTask} />
-        <List tasks={filteredTasks} completeTask={completeTask} deleteTask={deleteTask}/>
+        <List tasks={arr} completeTask={completeTask} deleteTask={deleteTask}/>
     </Box>
     );
-};
-
-Tasks.propTypes = {
-    tasks: PropTypes.arrayOf(
-    PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        status: PropTypes.oneOf(TASK_STATUSES),
-    })
-    ),
-    completeTask: PropTypes.func.isRequired,
-    deleteTask: PropTypes.func.isRequired,
 };
 
 export default Tasks;

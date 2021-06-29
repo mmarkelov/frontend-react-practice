@@ -8,7 +8,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.css";
 import {TASK_STATUSES} from "./const";
-// import {parse} from "date-fns";
 
 const useStyles = makeStyles({
   root: {
@@ -45,14 +44,15 @@ const App = () => {
   };
 
   const completeTask = (id) => {
-    const doneTask = tasks.filter((task) => task.id === id).map((task) => task.status = TASK_STATUSES[1])
-    // doneTask.date = parse(doneTask.date, "yyyy-MM-dd", new Date());
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    updatedTasks.push(doneTask);
+    const taskIndex = tasks.findIndex((task) => task.id === id);
+    const updatedTasks = [...tasks];
+    updatedTasks[taskIndex] = {
+      ...updatedTasks[taskIndex],
+      status: TASK_STATUSES[1],
+    };
     setTasks(updatedTasks);
-    localStorage.setItem(TASKS, JSON.stringify(doneTask))
+    localStorage.setItem(TASKS, JSON.stringify(updatedTasks));
   }
-
 
   const deleteTask = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
